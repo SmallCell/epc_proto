@@ -1,11 +1,11 @@
-REBAR:=rebar
+REBAR:='./rebar'
 
 .PHONY: all erl test clean doc 
 
 all: erl
 
 erl:
-	$(REBAR) get-deps compile
+	$(REBAR) compile
 
 test: all
 	@mkdir -p .eunit
