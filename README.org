@@ -1,0 +1,60 @@
+
+
+#+TITLE: 3GPP Protocols
+#+CATEGORY: LTE
+
+
+* Install
+** Dependencies
+    . rebar
+    . make
+** Build
+   To build the epc_proto library just run make.
+   : make
+* Usage
+** Decoding messages S1 Application Protocol
+   S1AP-PDU: initiatingMessage
+   Aligned PER
+#+BEGIN_EXAMPLE
+0040  xx xx 00 11 00 2a 00 00 04 00 3b 00 08 00 02 f8   .....*....;.....
+0050  46 00 00 00 50 00 3c 40 07 02 00 65 4e 42 30 35   F...P.<@...eNB05
+0060  00 40 00 07 00 00 19 00 02 f8 46 00 89 40 01 40   .@........F..@.@
+0070  00 00     
+#+END_EXAMPLE
+
+
+[16#00, 16#11, 16#00, 16#2a, 16#00, 16#00, 16#04, 16#00, 16#3b,
+16#00, 16#08, 16#00, 16#02, 16#f8, 16#46, 16#00, 16#00, 16#00, 16#50,
+16#00, 16#3c, 16#40, 16#07, 16#02, 16#00, 16#65, 16#4e, 16#42, 16#30,
+16#35, 16#00, 16#40, 16#00, 16#07, 16#00, 16#00, 16#19, 16#00, 16#02,
+16#f8, 16#46, 16#00, 16#89, 16#40, 16#01, 16#40, 16#00, 16#00]
+
+
+#+BEGIN_SRC lang:erlang
+'S1AP':decode('S1AP-PDU', [32,17,0,23,0,0,2,0,105,0,11,0,0,98,242,33,0,0,195,92,0,51,0,87,64,1,25]).
+
+{ok,{successfulOutcome,{'SuccessfulOutcome',17,reject,{'S1SetupResponse',[{'ProtocolIE-Field',105,reject,[{'ServedGUMMEIsItem',["bò!"],["Ã\\"],["3"],asn1_NOVALUE}]},{'ProtocolIE-Field',87,ignore,25}]}}
+
+#+END_SRC   
+
+
+* org-config                                                        :ARCHIVE:
+#+STARTUP: content hidestars
+#+TAGS: DOCS(d) CODING(c) TESTING(t) PLANING(p)
+#+LINK_UP: sitemap.html
+#+LINK_HOME: main.html
+#+COMMENT: toc:nil
+#+OPTIONS: ^:nil
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:nil -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+DESCRIPTION: Augment design process with system property discovering aid.
+#+KEYWORDS: SmallCell,
+#+LANGUAGE: en
+
+#+STYLE: <link rel="stylesheet" type="text/css" href="org-manual.css" />
+#+PROPERTY: Effort_ALL  1:00 2:00 4:00 6:00 8:00 12:00
+#+COLUMNS: %38ITEM(Details) %TAGS(Context) %7TODO(To Do) %5Effort(Time){:} %6CLOCKSUM{Total}
+
+
+
+  

@@ -18,3 +18,10 @@ clean:
 doc:
 	$(REBAR) doc
 
+##################################################################
+ERLANG_PATH=-pa apps/*/ebin -pa deps/*/ebin -pa ebin
+ERLANG_INCLUDE=-I include
+BINDIR=ebin
+
+shell:
+	exec erl ${ERLANG_PATH} -boot start_sasl

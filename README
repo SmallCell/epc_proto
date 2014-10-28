@@ -1,8 +1,0 @@
-Dependencies
-. rebar
-. make
-
-Build
-To build the epc_proto library just run make.
-$ make
-
