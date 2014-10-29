@@ -1,46 +1,51 @@
 -module(epc_proto_tests).
 
 -include_lib("eunit/include/eunit.hrl").
--include_lib("femto_test/include/eunit_fsm.hrl").
+-include_lib("src/S1AP.hrl").
 
-initiatingMessage() ->
-    [16#00, 16#11, 16#00, 16#2a, 16#00, 16#00, 16#04, 16#00, 16#3b,
-     16#00, 16#08, 16#00, 16#02, 16#f8, 16#46, 16#00, 16#00, 16#00, 16#50,
-     16#00, 16#3c, 16#40, 16#07, 16#02, 16#00, 16#65, 16#4e, 16#42, 16#30,
-     16#35, 16#00, 16#40, 16#00, 16#07, 16#00, 16#00, 16#19, 16#00, 16#02,
-     16#f8, 16#46, 16#00, 16#89, 16#40, 16#01, 16#40, 16#00, 16#00].
-
+-define(Hex, "00 11 00 2A 00 00 04 00 3B 00 08 00 02 F8 46 00
+              00 00 50 00 3C 40 07 02 00 65 4E 42 30 35 00 40
+              00 07 00 00 19 00 02 F8 46 00 89 40 01 40").
 
 s1ap_decoder_initiatingMessage_test() ->
-    Res = 'S1AP-PDU-Descriptions':decode('S1AP-PDU', initiatingMessage()),
-    ?debugFmt("~p~n", [Res]).
-
-s1ap_decoder_test() ->
-    Res = 'S1AP-PDU-Descriptions':decode('S1AP-PDU', [32,17,0,23,0,0,2,0,105,0,11,0,0,98,242,33,0,0,195,92,0,51,0,87,64,1,25]),
-    ?debugFmt("~p~n", [Res]).
-
-
-message() ->
-    {initiatingMessage,
-        {'InitiatingMessage',17,reject,
-            {'S1SetupRequest',
-                [{'ProtocolIE-Field',59,reject,
-                    {'Global-ENB-ID',[98,242,33],
-                        {'macroENB-ID',[1,0,1,0,1,0,1,0,1,1,0,1,0,1,1,0,0,0,0,1]},
-                        asn1_NOVALUE
-                    }
-                }, {'ProtocolIE-Field',60,ignore,[66,111,110,107,49,51]},
-                {'ProtocolIE-Field',64,reject,
-                    [{'SupportedTAs-Item',[0,1],[[98,242,33]],asn1_NOVALUE},
-                    {'SupportedTAs-Item',[0,2],[[98,242,33]],asn1_NOVALUE},
-                    {'SupportedTAs-Item',[0,3],[[98,242,33]],asn1_NOVALUE},
-                    {'SupportedTAs-Item',[2,84],[[98,242,33]],asn1_NOVALUE}]
-                }, {'ProtocolIE-Field',137,ignore,v32}]
-            }
-        }
-    }.
+    Msg = hex:hexstr_to_list(hex:trim_whitespace(?Hex)),
+    ?debugFmt("~p~n", [Msg]),
+    {ok, Res} = 'S1AP':decode('S1AP-PDU', Msg),
+    ?debugFmt("~p~n", [Res]),
+    Res.
 
 
-s1ap_encode_test() ->
-    Res = 'S1AP-PDU-Descriptions':encode('S1AP-PDU', message()),
-    ?debugFmt("~p~n", [Res]).
+s1ap_encode_initiatingMessage_test() ->
+    Initiatingmessage =
+        {initiatingMessage,
+         #'InitiatingMessage'{
+            procedureCode = 17, criticality = reject,
+            value = 
+                #'S1SetupRequest'{
+                   protocolIEs = 
+                       [#'ProtocolIE-Field'{
+                           id = ?'id-Global-ENB-ID', criticality = reject,
+                           value =
+                               #'Global-ENB-ID'{
+                                  pLMNidentity = [2,248,70],
+                                  'eNB-ID' = 
+                                      {'macroENB-ID',[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1]}
+                                  }},
+                        #'ProtocolIE-Field'{
+                           id = ?'id-eNBname', criticality = ignore,
+                           value = "eNB05"},
+                        #'ProtocolIE-Field'{
+                           id = ?'id-SupportedTAs', criticality = reject,
+                           value = 
+                               [#'SupportedTAs-Item'{
+                                   tAC = [0,100],
+                                   broadcastPLMNs = [[2,248,70]]
+                                   }]},
+                        #'ProtocolIE-Field'{
+                           id = 'id-DefaultPagingDRX', criticality = ignore,
+                           value = v128}]}}},
+    {ok, Res} = 'S1AP':encode('S1AP-PDU', Initiatingmessage),
+    Msg = hex:hexstr_to_list(hex:trim_whitespace(?Hex)),
+    ?assertEqual(Msg, Res),
+    Res.
+
