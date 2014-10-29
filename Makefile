@@ -1,10 +1,20 @@
 REBAR:='./rebar'
 
-.PHONY: all erl test clean doc 
+.PHONY: all erl test clean doc protocols
+
+
+ASN1_CT_OPTS = +asn1config +verbose
+PROTOCOLS = protocols
+ASN1CT = erlc
 
 all: erl
 
-erl:
+protocols:
+	$(ASN1CT) -o src/ $(ASN1_CT_OPTS) +uper $(PROTOCOLS)/EUTRA-RRC.set.asn
+	$(ASN1CT) -o src/ $(ASN1_CT_OPTS) +per  $(PROTOCOLS)/S1AP.set.asn
+	$(ASN1CT) -o src/ $(ASN1_CT_OPTS) +per  $(PROTOCOLS)/X2AP.set.asn
+
+erl: 
 	$(REBAR) compile
 
 test: all
