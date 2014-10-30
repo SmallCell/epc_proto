@@ -10,7 +10,7 @@
               00 07 00 00 19 00 02 F8 46 00 89 40 01 40").
 
 s1ap_decoder_initiatingMessage_test() ->
-    Msg = hex:hexstr_to_list(hex:trim_whitespace(?S1InitMsgHex)),
+    Msg = hex:hexstr_to_bin(hex:trim_whitespace(?S1InitMsgHex)),
     %% ?debugFmt("~p~n", [Msg]),
     {ok, Res} = 'S1AP':decode('S1AP-PDU', Msg),
     %% ?debugFmt("~p~n", [Res]),
@@ -46,6 +46,6 @@ s1ap_encode_initiatingMessage_test() ->
                            id = ?'id-DefaultPagingDRX', criticality = ignore,
                            value = v128}]}}},
     {ok, Res} = 'S1AP':encode('S1AP-PDU', Initiatingmessage),
-    Msg = hex:hexstr_to_list(hex:trim_whitespace(?S1InitMsgHex)),
+    Msg = hex:hexstr_to_bin(hex:trim_whitespace(?S1InitMsgHex)),
     ?assertEqual(Msg, Res),
     Res.

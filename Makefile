@@ -3,16 +3,16 @@ REBAR:='./rebar'
 .PHONY: all erl test clean doc protocols
 
 
-ASN1_CT_OPTS = +asn1config +verbose
+ASN1_CT_OPTS = +verbose +compact_bit_string +noobj
 PROTOCOLS = protocols
-ASN1CT = erlc
+ASN1CT = 
 
 all: erl
 
 protocols:
-	$(ASN1CT) -o src/ $(ASN1_CT_OPTS) +uper $(PROTOCOLS)/EUTRA-RRC.set.asn
-	$(ASN1CT) -o src/ $(ASN1_CT_OPTS) +per  $(PROTOCOLS)/S1AP.set.asn
-	$(ASN1CT) -o src/ $(ASN1_CT_OPTS) +per  $(PROTOCOLS)/X2AP.set.asn
+	erl -noshell -eval 'asn1ct:compile("protocols/EUTRA-RRC.set.asn", [{outdir,"src"}, uper, verbose, compact_bit_string, noobj])' -eval 'init:stop()'
+	erl -noshell -eval 'asn1ct:compile("protocols/S1AP.set.asn", [{outdir,"src"}, per, verbose, compact_bit_string, noobj])' -eval 'init:stop()'
+	erl -noshell -eval 'asn1ct:compile("protocols/X2AP.set.asn", [{outdir,"src"}, per, verbose, compact_bit_string, noobj])' -eval 'init:stop()'
 
 erl: 
 	$(REBAR) compile

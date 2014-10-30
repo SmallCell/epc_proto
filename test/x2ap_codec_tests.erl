@@ -112,16 +112,16 @@
 
 
 x2ap_decoder_initiatingMessage_test() ->
-    Msg = hex:hexstr_to_list(hex:trim_whitespace(?X2InitMsgHex)),
+    Msg = hex:hexstr_to_bin(hex:trim_whitespace(?X2InitMsgHex)),
     %% ?debugFmt("~p~n", [Msg]),
     {ok, Res} = 'X2AP':decode('X2AP-PDU', Msg),
-    %% ?debugFmt("~p~n", [Res]),
+    %% ?debugFmt(">> ~p~n", [Res]),
     Res.
 
 x2ap_encode_initiatingMessage_test() ->
     {ok, Res} = 'X2AP':encode('X2AP-PDU', ?X2InitMsgRec),
     %% ?debugFmt(">> ~p~n", [Res]),
-    Msg = hex:hexstr_to_list(hex:trim_whitespace(?X2InitMsgHex)),
+    Msg = hex:hexstr_to_bin(hex:trim_whitespace(?X2InitMsgHex)),
     %% ?debugFmt(">> ~p~n", [Msg]),
     ?assertEqual(Msg, Res),
     Res.
