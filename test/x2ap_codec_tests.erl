@@ -2,7 +2,7 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
--include_lib("src/X2AP.hrl").
+-include_lib("include/X2AP.hrl").
 
 -compile(export_all).
 
@@ -24,90 +24,87 @@
 %% : rr("*/*").
 %% : rp(R).
 -define(X2InitMsgRec,
-        {successfulOutcome,
-         #'SuccessfulOutcome'{
-            procedureCode = 6,criticality = reject,
-            value = 
-                #'X2SetupResponse'{
-                   protocolIEs = 
-                       [#'ProtocolIE-Field'{
-                           id = ?'id-GlobalENB-ID',criticality = reject,
-                           value = 
-                               #'GlobalENB-ID'{
-                                  'pLMN-Identity' = [2,248,70],
-                                  'eNB-ID' = 
-                                      {'macro-eNB-ID',[0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,1]}
-                                  }},
-                        #'ProtocolIE-Field'{
-                           id = 20,criticality = reject,
-                           value = 
-                               [#'ServedCells_SEQOF'{
-                                   servedCellInfo = 
-                                       #'ServedCell-Information'{
+{successfulOutcome,
+    #'SuccessfulOutcome'{
+        procedureCode = 6,criticality = reject,
+        value = 
+            #'X2SetupResponse'{
+                protocolIEs = 
+                    [#'ProtocolIE-Field'{
+                         id = 21,criticality = reject,
+                         value = 
+                             #'GlobalENB-ID'{
+                                 'pLMN-Identity' = <<2,248,70>>,
+                                 'eNB-ID' = {'macro-eNB-ID',<<0,6,5:4>>},
+                                 'iE-Extensions' = asn1_NOVALUE}},
+                     #'ProtocolIE-Field'{
+                         id = 20,criticality = reject,
+                         value = 
+                             [#'ServedCells_SEQOF'{
+                                  servedCellInfo = 
+                                      #'ServedCell-Information'{
                                           pCI = 66,
                                           cellId = 
                                               #'ECGI'{
-                                                 'pLMN-Identity' = [2,248,70],
-                                                 eUTRANcellIdentifier = 
-                                                     [0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,1,0,0,0,0,0,0,0,0]
-                                                 },
-                                          tAC = [0,100],
-                                          broadcastPLMNs = [[2,248,70]],
+                                                  'pLMN-Identity' = <<2,248,70>>,
+                                                  eUTRANcellIdentifier = <<0,6,80,0:4>>,
+                                                  'iE-Extensions' = asn1_NOVALUE},
+                                          tAC = <<0,100>>,
+                                          broadcastPLMNs = [<<2,248,70>>],
                                           'eUTRA-Mode-Info' = 
                                               {fDD,
-                                               #'FDD-Info'{
-                                                  'uL-EARFCN' = 19575,'dL-EARFCN' = 1575,
-                                                  'uL-Transmission-Bandwidth' = bw50,
-                                                  'dL-Transmission-Bandwidth' = bw50
-                                                  }},
+                                                  #'FDD-Info'{
+                                                      'uL-EARFCN' = 19575,'dL-EARFCN' = 1575,
+                                                      'uL-Transmission-Bandwidth' = bw50,
+                                                      'dL-Transmission-Bandwidth' = bw50,
+                                                      'iE-Extensions' = asn1_NOVALUE}},
                                           'iE-Extensions' = 
                                               [#'ProtocolExtensionField'{
-                                                  id = 41,criticality = ignore,extensionValue = <<" ">>}]},
-                                   'neighbour-Info' = 
-                                       [#'Neighbour-Information_SEQOF'{
+                                                   id = 41,criticality = ignore,
+                                                   extensionValue = {asn1_OPENTYPE,<<" ">>}}]},
+                                  'neighbour-Info' = 
+                                      [#'Neighbour-Information_SEQOF'{
                                            eCGI = 
                                                #'ECGI'{
-                                                  'pLMN-Identity' = [2,248,70],
-                                                  eUTRANcellIdentifier = 
-                                                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0]
-                                                  },
+                                                   'pLMN-Identity' = <<2,248,70>>,
+                                                   eUTRANcellIdentifier = <<0,0,16,0:4>>,
+                                                   'iE-Extensions' = asn1_NOVALUE},
                                            pCI = 356,eARFCN = 1575,
                                            'iE-Extensions' = 
                                                [#'ProtocolExtensionField'{
-                                                   id = 76,criticality = ignore,
-                                                   extensionValue = <<0,100>>}]},
-                                        #'Neighbour-Information_SEQOF'{
+                                                    id = 76,criticality = ignore,
+                                                    extensionValue = {asn1_OPENTYPE,<<0,100>>}}]},
+                                       #'Neighbour-Information_SEQOF'{
                                            eCGI = 
                                                #'ECGI'{
-                                                  'pLMN-Identity' = [2,248,70],
-                                                  eUTRANcellIdentifier = 
-                                                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1]
-                                                  },
+                                                   'pLMN-Identity' = <<2,248,70>>,
+                                                   eUTRANcellIdentifier = <<0,0,16,1:4>>,
+                                                   'iE-Extensions' = asn1_NOVALUE},
                                            pCI = 357,eARFCN = 1575,
                                            'iE-Extensions' = 
                                                [#'ProtocolExtensionField'{
-                                                   id = 76,criticality = ignore,
-                                                   extensionValue = <<0,100>>}]},
-                                        #'Neighbour-Information_SEQOF'{
+                                                    id = 76,criticality = ignore,
+                                                    extensionValue = {asn1_OPENTYPE,<<0,100>>}}]},
+                                       #'Neighbour-Information_SEQOF'{
                                            eCGI = 
                                                #'ECGI'{
-                                                  'pLMN-Identity' = [2,248,70],
-                                                  eUTRANcellIdentifier = 
-                                                      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0]
-                                                  },
+                                                   'pLMN-Identity' = <<2,248,70>>,
+                                                   eUTRANcellIdentifier = <<0,0,16,2:4>>,
+                                                   'iE-Extensions' = asn1_NOVALUE},
                                            pCI = 358,eARFCN = 1575,
                                            'iE-Extensions' = 
                                                [#'ProtocolExtensionField'{
-                                                   id = 76,criticality = ignore,
-                                                   extensionValue = <<0,100>>}]}]
-                                   }]},
-                        #'ProtocolIE-Field'{
-                           id = 24,criticality = reject,
-                           value = 
-                               [#'GU-Group-ID'{
-                                   'pLMN-Identity' = [2,248,70],
-                                   'mME-Group-ID' = [128,2]
-                                   }]}]}}}
+                                                    id = 76,criticality = ignore,
+                                                    extensionValue = {asn1_OPENTYPE,<<0,100>>}}]}],
+                                  'iE-Extensions' = asn1_NOVALUE}]},
+                     #'ProtocolIE-Field'{
+                         id = 24,criticality = reject,
+                         value = 
+                             [#'GU-Group-ID'{
+                                  'pLMN-Identity' = <<2,248,70>>,
+                                  'mME-Group-ID' = <<128,2>>,
+                                  'iE-Extensions' = asn1_NOVALUE}]}]}}}
+
        ).
 
 

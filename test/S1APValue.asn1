@@ -1,0 +1,109 @@
+S1APValue
+
+DEFINITIONS AUTOMATIC TAGS ::= 
+
+BEGIN
+
+IMPORTS
+    S1AP-PDU
+FROM S1AP-PDU-Descriptions;
+
+setupInitiatingMessage S1AP-PDU ::= initiatingMessage : {
+  procedureCode 17,
+  criticality reject,
+  value S1SetupRequest : {
+    protocolIEs {
+      {
+        id 59,
+        criticality reject,
+        value Global-ENB-ID : {
+          pLMNidentity '62F221'H,
+          eNB-ID macroENB-ID : '10101010110101100001'B
+        }
+      },
+      {
+        id 60,
+        criticality ignore,
+        value ENBname : "Bonk13"
+      },
+      {
+        id 64,
+        criticality reject,
+        value SupportedTAs : {
+          {
+            tAC '0001'H,
+            broadcastPLMNs {
+              '62F221'H
+            }
+          },
+          {
+            tAC '0002'H,
+            broadcastPLMNs {
+              '62F221'H
+            }
+          },
+          {
+            tAC '0003'H,
+            broadcastPLMNs {
+              '62F221'H
+            }
+          },
+          {
+            tAC '0254'H,
+            broadcastPLMNs {
+              '62F221'H
+            }
+          }
+        }
+      },
+      {
+        id 137,
+        criticality ignore,
+        value PagingDRX : v32
+      }
+    }
+  }
+}
+
+
+setupSuccess S1AP-PDU ::= successfulOutcome : {
+  procedureCode 17,
+  criticality reject,
+  value S1SetupResponse : {
+    protocolIEs {
+      {
+        id 105,
+        criticality reject,
+        value ServedGUMMEIs : {
+          {
+            servedPLMNs {
+              '62F221'H
+            },
+            servedGroupIDs {
+              'C35C'H
+            },
+            servedMMECs {
+              '33'H
+            }
+          }
+        }
+      },
+      {
+        id 87,
+        criticality ignore,
+        value RelativeMMECapacity : 25
+      }
+    }
+  }
+}
+
+resetSuccess S1AP-PDU ::= successfulOutcome : {
+  procedureCode 14,
+  criticality reject,
+  value ResetAcknowledge : {
+    protocolIEs {
+    }
+  }
+}
+
+END
