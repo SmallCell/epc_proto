@@ -2,7 +2,7 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
--include_lib("src/EUTRA-RRC.hrl").
+-include_lib("include/EUTRA-RRC.hrl").
 
 -compile(export_all).
 
@@ -178,7 +178,7 @@ rrc_decoder_initiatingMessage_test() ->
     Res.
 
 rrc_encode_initiatingMessage_test() ->    
-    {ok, Res} = 'EUTRA-RRC':encode('DL-CCCH-Message', ?DL_CCCH_MessageRec),
+    {ok, Res} = 'EUTRA-RRC':encode('DL-CCCH-Message', ?DL_CCCH_MessageRec1),
     %% ?debugFmt(">> ~p~n", [Res]),
     Msg = hex:hexstr_to_bin(hex:trim_whitespace(?DL_CCCH_MessageHex)),
     ?debugFmt(">> ~p~n", [Msg]),
