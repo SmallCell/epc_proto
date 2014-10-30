@@ -19,6 +19,10 @@
 4c 40 02 00 64 00 18 00 06 00 02 f8 46 80 02 
 ").
 
+%% Getting record syntax out of shell
+%% : R=x2ap_codec_tests:x2ap_decoder_initiatingMessage_test().
+%% : rr("*/*").
+%% : rp(R).
 -define(X2InitMsgRec,
         {successfulOutcome,
          #'SuccessfulOutcome'{

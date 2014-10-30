@@ -36,8 +36,44 @@
 
 {ok,{successfulOutcome,{'SuccessfulOutcome',17,reject,{'S1SetupResponse',[{'ProtocolIE-Field',105,reject,[{'ServedGUMMEIsItem',["bò!"],["Ã\\"],["3"],asn1_NOVALUE}]},{'ProtocolIE-Field',87,ignore,25}]}}
 
-#+END_SRC   
+#+END_SRC
+* Utils
+/**
+	 * Extracts the PLMN_Identity from given byte array. If the array length is
+	 * not 3, 2, or 1, returns null; The String representation of returned
+	 * PLMN_Identity is as example:
+	 * <ul>
+	 * <li>{0x12, 0x34, 0x56} --> 123:456</li>
+	 * <li>{0x12, 0x34} --> 0:234</li>
+	 * <li>{0x12} --> 0:12</li>
+	 * </ul>
+	 * 
+	 * @param bytes
+	 * @return
+	 */
+	public static final PLMN_Identity extractPLMN_Identity(byte[] bytes) {
+		int mcc = 0;
+		int mnc = 0;
+		if (bytes.length == 3) {
+			mcc += ((bytes[0] & 0xF0) >> 4) * 100;
+			mcc += (bytes[0] & 0x0F) * 10;
+			mcc += (bytes[1] & 0xF0) >> 4;
 
+			mnc += (bytes[1] & 0x0F) * 100;
+			mnc += ((bytes[2] & 0xF0) >> 4) * 10;
+			mnc += bytes[2] & 0x0F;
+		} else if (bytes.length == 2) {
+			mnc += (bytes[0] & 0x0F) * 100;
+			mnc += ((bytes[1] & 0xF0) >> 4) * 10;
+			mnc += bytes[1] & 0x0F;
+		} else if (bytes.length == 1) {
+			mnc += ((bytes[0] & 0xF0) >> 4) * 10;
+			mnc += bytes[0] & 0x0F;
+		} else {
+			return null;
+		}
+		return new PLMN_Identity(mcc, mnc);
+	}
 
 * org-config                                                        :ARCHIVE:
 #+STARTUP: content hidestars
