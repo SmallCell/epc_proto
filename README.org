@@ -74,7 +74,10 @@
 		}
 		return new PLMN_Identity(mcc, mnc);
 	}
-
+* GTP stack
+  Starting point: http://blogs.ixiacom.com/ixia-blog/lte-development-validation-gtp-tunneling/
+  http://publications.lib.chalmers.se/records/fulltext/155659.pdf
+  http://code.google.com/p/open-cgf/source/browse/trunk/src/gtpp_encode.erl
 * org-config                                                        :ARCHIVE:
 #+STARTUP: content hidestars
 #+TAGS: DOCS(d) CODING(c) TESTING(t) PLANING(p)
