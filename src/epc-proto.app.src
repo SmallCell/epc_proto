@@ -1,0 +1,14 @@
+{application, 'epc-proto',
+ [
+  {description, ""},
+  {vsn, "1.0.0"},
+  {modules, [epc_proto]},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { epc_proto_app, []}},
+  {env, []}
+ ]}.
+
