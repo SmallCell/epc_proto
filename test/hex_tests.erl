@@ -8,14 +8,13 @@
 -module(hex_tests).
 
 -include_lib("eunit/include/eunit.hrl").
--include_lib("femto_test/include/eunit_fsm.hrl").
 
 
 from_string_test() ->
     Msg = "0011002a000004003b00080002f84600000050003c40070200654e423035004000070000190002f84600894001400000",
     ResList = hex:hexstr_to_list(Msg),
     %% ?debugFmt("~p~n", [ResList]),
-    ResString = hex:list_to_hexstr(ResList),
+    _ResString = hex:list_to_hexstr(ResList),
     %% ?debugFmt("~p~n", [ResString]),
     ok.
 
@@ -26,7 +25,7 @@ from_dump_test() ->
 00 07 00 00 19 00 02 F8 46 00 89 40 01 40",
     Msg = hex:trim_whitespace(Hex),
     %% ?debugFmt(">> ~p~n", [Hex]),
-    ResList = hex:hexstr_to_list(Msg),
+    _ResList = hex:hexstr_to_list(Msg),
     %% ?debugFmt(">> ~p~n", [ResList]),
     ok.
     
