@@ -8,3 +8,4 @@ docs/*.html
 docs/*.pdf
 docs/*.tex
 
+ebin/

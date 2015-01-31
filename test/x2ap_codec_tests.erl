@@ -2,7 +2,7 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
--include_lib("include/X2AP.hrl").
+-include_lib("epc_proto/include/X2AP.hrl").
 
 -compile(export_all).
 

@@ -1,7 +1,7 @@
 -module(s1ap_codec_tests).
 
 -include_lib("eunit/include/eunit.hrl").
--include_lib("include/S1AP.hrl").
+-include_lib("epc_proto/include/S1AP.hrl").
 
 -compile(export_all).
 

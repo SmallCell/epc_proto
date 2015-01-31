@@ -2,7 +2,7 @@
 
 -include_lib("eunit/include/eunit.hrl").
 
--include_lib("include/EUTRA-RRC.hrl").
+-include_lib("epc_proto/include/EUTRA-RRC.hrl").
 
 -compile(export_all).
 
